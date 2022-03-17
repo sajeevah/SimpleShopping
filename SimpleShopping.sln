@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleShopping.Client", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleShopping.Context", "SimpleShopping.Context\SimpleShopping.Context.csproj", "{F645F158-524B-40C5-A403-FCFF79FB4427}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleShopping.Identity", "SimpleShopping.Identity\SimpleShopping.Identity.csproj", "{9AD62421-6BD7-4405-BDCF-4686FF2ECB36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F645F158-524B-40C5-A403-FCFF79FB4427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F645F158-524B-40C5-A403-FCFF79FB4427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F645F158-524B-40C5-A403-FCFF79FB4427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD62421-6BD7-4405-BDCF-4686FF2ECB36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD62421-6BD7-4405-BDCF-4686FF2ECB36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD62421-6BD7-4405-BDCF-4686FF2ECB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD62421-6BD7-4405-BDCF-4686FF2ECB36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
