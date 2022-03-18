@@ -13,8 +13,8 @@ namespace SimpleShopping.Identity.ViewModels
 
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
-        
-        //[Required(ErrorMessage = "User role is required")]
-        //public UserRole? role { get; set; }
+
+        [Required(ErrorMessage = "User role is required")]
+        public string? Role { get; set; }
     }
 }

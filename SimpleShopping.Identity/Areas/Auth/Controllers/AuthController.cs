@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 using SimpleShopping.Identity.ViewModels;
 using Microsoft.AspNetCore.Http;
 using SimpleShopping.Identity.Constants;
@@ -86,49 +82,15 @@ namespace SimpleShopping.Identity.Areas.Auth.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
 
-            return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
-        }
-
-        [HttpPost]
-        [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
-        {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
-            if (userExists != null)
-            { 
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User already exists!" });
-            }
-
-            IdentityUser user = new()
+            if (model.Role.Equals(UserRoles.Seller))
             {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded) 
+                await _userManager.AddToRoleAsync(user, UserRoles.Seller);
+            }
+            else 
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                await _userManager.AddToRoleAsync(user, UserRoles.Buyer);
             }
 
-            // TODO: move this to seeder 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            { 
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            }
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Buyer))
-            { 
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Buyer));
-            }
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Seller))
-            { 
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Seller));
-            }
-
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
             return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
         }
 
