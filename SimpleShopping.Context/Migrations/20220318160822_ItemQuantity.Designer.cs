@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleShopping.Context.Context;
 
@@ -11,9 +12,10 @@ using SimpleShopping.Context.Context;
 namespace SimpleShopping.Context.Migrations
 {
     [DbContext(typeof(SimpleShoppingContext))]
-    partial class SimpleShoppingContextModelSnapshot : ModelSnapshot
+    [Migration("20220318160822_ItemQuantity")]
+    partial class ItemQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

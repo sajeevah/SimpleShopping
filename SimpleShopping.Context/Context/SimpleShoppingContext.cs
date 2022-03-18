@@ -16,6 +16,11 @@ namespace SimpleShopping.Context.Context
         }
 
         public virtual DbSet<Test> Test { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Make> Make { get; set; }
+        public virtual DbSet<ItemModel> ItemModel { get; set; }
+        public virtual DbSet<Item> Item { get; set; }
+        public virtual DbSet<ItemImage> ItemImage { get; set; }
 
     }
 }
