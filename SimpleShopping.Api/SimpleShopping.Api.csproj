@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleShopping.Context\SimpleShopping.Context.csproj" />
+    <ProjectReference Include="..\SimpleShopping.Identity\SimpleShopping.Identity.csproj" />
   </ItemGroup>
 
 </Project>
