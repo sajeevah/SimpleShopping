@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SimpleShopping.Identity.Context;
+using SimpleShopping.Identity.Interfaces;
+using SimpleShopping.Identity.Seeder;
 using System.Text;
 
 namespace SimpleShopping.Identity.Extensions
@@ -44,6 +46,8 @@ namespace SimpleShopping.Identity.Extensions
             services.AddDbContext<IndentityContext>(cfg => {
                 cfg.UseSqlServer(configuration.GetConnectionString("SimpleShoppingIdentityConnectionString"));
             });
+
+            services.AddScoped<IIdentitySeeder, IdentitySeeder>();
 
             return services;
         }

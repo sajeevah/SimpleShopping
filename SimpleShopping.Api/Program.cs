@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Identity.Extensions;
+using SimpleShopping.Identity.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,4 +36,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+SeedDatabase();
+
 app.Run();
+
+async void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var identitySeeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
+        await identitySeeder.SeedAsync();
+    }
+}
