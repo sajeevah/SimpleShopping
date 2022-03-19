@@ -9,6 +9,8 @@ using System.Security.Claims;
 using SimpleShopping.Identity.ViewModels;
 using Microsoft.AspNetCore.Http;
 using SimpleShopping.Identity.Constants;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace SimpleShopping.Identity.Areas.Auth.Controllers
 {
@@ -92,6 +94,28 @@ namespace SimpleShopping.Identity.Areas.Auth.Controllers
             }
 
             return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
+        }
+
+        // PUT api/Category/5
+        [HttpGet]
+        [Route("user")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetUser()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user == null) return BadRequest();
+
+            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+            return Ok(
+                new UserModel
+                {
+                    Email = user.Email,
+                    Id = user.Id,
+                    Username = user.UserName,
+                    UserRole = userRole,
+                });
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
