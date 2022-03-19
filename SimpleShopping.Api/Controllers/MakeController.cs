@@ -7,60 +7,60 @@ namespace SimpleShopping.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemModelController : ControllerBase
+    public class MakeController : ControllerBase
     {
         private readonly SimpleShoppingContext _context;
 
-        public ItemModelController(SimpleShoppingContext context)
+        public MakeController(SimpleShoppingContext context)
         {
             _context = context;
         }
 
-        // GET: api/ItemModel
+        // GET: api/Make
         [HttpGet]
-        public IEnumerable<ItemModel> GetCategores()
+        public IEnumerable<Make> GetCategores()
         {
-            return _context.ItemModel;
+            return _context.Make;
         }
 
-        // GET api/ItemModel/5
+        // GET api/Make/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetItemModel(Guid id)
+        public async Task<IActionResult> GetMake(Guid id)
         {
-            var itemModel = await _context.ItemModel.FindAsync(id);
+            var make = await _context.Make.FindAsync(id);
 
-            if (itemModel == null)
+            if (make == null)
             {
                 return NotFound();
             }
 
-            return Ok(itemModel);
+            return Ok(make);
         }
 
-        // POST api/ItemModel
+        // POST api/Make
         [HttpPost]
-        public async Task PostItemModel([FromBody] ItemModel itemModel)
+        public async Task PostMake([FromBody] Make make)
         {
 
-            _context.ItemModel.Add(itemModel);
+            _context.Make.Add(make);
             await _context.SaveChangesAsync();
         }
 
-        // PUT api/ItemModel/5
+        // PUT api/Make/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutItemModel(Guid id, [FromBody] ItemModel itemModel)
+        public async Task<IActionResult> PutMake(Guid id, [FromBody] Make make)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != itemModel.Id)
+            if (id != make.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(itemModel).State = EntityState.Modified;
+            _context.Entry(make).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace SimpleShopping.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ItemModelExists(id))
+                if (!MakeExists(id))
                 {
                     return NotFound();
                 }
@@ -81,25 +81,25 @@ namespace SimpleShopping.Api.Controllers
             return NoContent();
         }
 
-        // DELETE api/ItemModel/5
+        // DELETE api/Make/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItemModel(Guid id)
+        public async Task<IActionResult> DeleteMake(Guid id)
         {
-            var itemModel = await _context.ItemModel.FindAsync(id);
-            if (itemModel == null)
+            var make = await _context.Make.FindAsync(id);
+            if (make == null)
             {
                 return NotFound();
             }
 
-            _context.ItemModel.Remove(itemModel);
+            _context.Make.Remove(make);
             await _context.SaveChangesAsync();
 
-            return Ok(itemModel);
+            return Ok(make);
         }
 
-        private bool ItemModelExists(Guid id)
+        private bool MakeExists(Guid id)
         {
-            return _context.ItemModel.Any(e => e.Id == id);
+            return _context.Make.Any(e => e.Id == id);
         }
     }
 }

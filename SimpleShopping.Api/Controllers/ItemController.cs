@@ -3,64 +3,66 @@ using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Context.Models;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace SimpleShopping.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemModelController : ControllerBase
+    public class ItemController : ControllerBase
     {
         private readonly SimpleShoppingContext _context;
 
-        public ItemModelController(SimpleShoppingContext context)
+        public ItemController(SimpleShoppingContext context)
         {
             _context = context;
         }
 
-        // GET: api/ItemModel
+        // GET: api/Item
         [HttpGet]
-        public IEnumerable<ItemModel> GetCategores()
+        public IEnumerable<Item> GetCategores()
         {
-            return _context.ItemModel;
+            return _context.Item;
         }
 
-        // GET api/ItemModel/5
+        // GET api/Item/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetItemModel(Guid id)
+        public async Task<IActionResult> GetItem(Guid id)
         {
-            var itemModel = await _context.ItemModel.FindAsync(id);
+            var item = await _context.Item.FindAsync(id);
 
-            if (itemModel == null)
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return Ok(itemModel);
+            return Ok(item);
         }
 
-        // POST api/ItemModel
+        // POST api/Item
         [HttpPost]
-        public async Task PostItemModel([FromBody] ItemModel itemModel)
+        public async Task PostItem([FromBody] Item item)
         {
 
-            _context.ItemModel.Add(itemModel);
+            _context.Item.Add(item);
             await _context.SaveChangesAsync();
         }
 
-        // PUT api/ItemModel/5
+        // PUT api/Item/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutItemModel(Guid id, [FromBody] ItemModel itemModel)
+        public async Task<IActionResult> PutItem(Guid id, [FromBody] Item item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != itemModel.Id)
+            if (id != item.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(itemModel).State = EntityState.Modified;
+            _context.Entry(item).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +70,7 @@ namespace SimpleShopping.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ItemModelExists(id))
+                if (!ItemExists(id))
                 {
                     return NotFound();
                 }
@@ -81,25 +83,25 @@ namespace SimpleShopping.Api.Controllers
             return NoContent();
         }
 
-        // DELETE api/ItemModel/5
+        // DELETE api/Item/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItemModel(Guid id)
+        public async Task<IActionResult> DeleteItem(Guid id)
         {
-            var itemModel = await _context.ItemModel.FindAsync(id);
-            if (itemModel == null)
+            var item = await _context.Item.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            _context.ItemModel.Remove(itemModel);
+            _context.Item.Remove(item);
             await _context.SaveChangesAsync();
 
-            return Ok(itemModel);
+            return Ok(item);
         }
 
-        private bool ItemModelExists(Guid id)
+        private bool ItemExists(Guid id)
         {
-            return _context.ItemModel.Any(e => e.Id == id);
+            return _context.Item.Any(e => e.Id == id);
         }
     }
 }
