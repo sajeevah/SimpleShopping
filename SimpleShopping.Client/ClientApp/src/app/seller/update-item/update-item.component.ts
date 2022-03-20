@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { AuthService } from 'src/@core/auth/auth.service';
 import { CategoryDataService } from 'src/@core/data/category-data.service';
 import { ItemDataService } from 'src/@core/data/item-data.service';
@@ -55,6 +54,7 @@ export class UpdateItemComponent implements OnInit {
       model: ['', Validators.required],
       make: ['', Validators.required],
       quantity: [0, Validators.required],
+      price: [0, Validators.required],
     });
 
     this.getItem();
@@ -73,6 +73,7 @@ export class UpdateItemComponent implements OnInit {
         this.updateItemFormController.model.setValue(this.item.itemModelId); 
         this.updateItemFormController.make.setValue(this.item.makeId); 
         this.updateItemFormController.quantity.setValue(this.item.quantity); 
+        this.updateItemFormController.price.setValue(this.item.price); 
       });
   }
   
@@ -102,6 +103,7 @@ export class UpdateItemComponent implements OnInit {
       itemModelId: this.updateItemFormController.model.value,
       makeId: this.updateItemFormController.make.value,
       quantity: Number(this.updateItemFormController.quantity.value),
+      price: Number(this.updateItemFormController.price.value),
       imageUrl: '',
       sellerId: this.authService.currentUserValue.id,
     }

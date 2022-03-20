@@ -53,6 +53,7 @@ export class AddItemComponent implements OnInit {
       model: ['', Validators.required],
       make: ['', Validators.required],
       quantity: [0, Validators.required],
+      price: [0, Validators.required],
     });
     this.getCategories();
     this.getItemModels();
@@ -86,6 +87,7 @@ export class AddItemComponent implements OnInit {
       quantity: Number(this.addItemFormController.quantity.value),
       imageUrl: '',
       sellerId: this.authService.currentUserValue.id,
+      price: Number(this.addItemFormController.price.value),
     }
 
     this.itemDataService.create(data).subscribe(

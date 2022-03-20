@@ -19,6 +19,9 @@ namespace SimpleShopping.Context.Models
         public string? Description { get; set; }
 
         [Required]
+        public double? Price { get; set; }
+
+        [Required]
         public Guid CategoryId { get; set; }
 
         [Required]

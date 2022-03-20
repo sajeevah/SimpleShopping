@@ -15,6 +15,10 @@
       <label for="quantity">Quantity</label>
     </div>
     <div class="form-floating">
+      <input type="number" class="form-control" formControlName="price" id="price" placeholder="price">
+      <label for="quantity">Price</label>
+    </div>
+    <div class="form-floating">
       <label for="make">Category</label>
       <select class="form-control" formControlName="category" id="category" placeholder="category">
         <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>

@@ -9,6 +9,7 @@
       <th>Model</th>
       <th>Quantity</th>
       <th>Image</th>
+      <th>Price</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
       <td>{{ item.itemModel?.name }}</td>
       <td>{{ item.quantity }}</td>
       <td><img src="https://www.learningcontainer.com/wp-content/uploads/2020/08/Sample-png-Image-for-Testing.png" width="50" height="50"></td>
+      <td>{{ item.price }}</td>
       <td>
         <button class="btn btn-primary" (click)="addToCart(item.id)" >Add to cart</button>
       </td>

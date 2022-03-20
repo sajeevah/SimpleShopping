@@ -5,6 +5,7 @@ import { IMake } from "./make.model";
 export interface IItem {
     id?: string;
     name?: string; 
+    price?: number; 
     description?: string; 
     categoryId?: string; 
     itemModelId?: string; 
