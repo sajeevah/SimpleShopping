@@ -1,0 +1,29 @@
+<h1 id="tableLabel">My Items</h1>
+<button class="btn btn-primary" >Add</button>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Quantity</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts">
+      <td>{{ forecast.date }}</td>
+      <td>{{ forecast.temperatureC }}</td>
+      <td>{{ forecast.temperatureF }}</td>
+      <td>{{ forecast.summary }}</td>
+      <td>{{ forecast.summary }}</td>
+      <td>{{ forecast.summary }}</td>
+      <td>
+        <button class="btn btn-primary" >Update</button>
+        <button class="btn btn-primary" >Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
