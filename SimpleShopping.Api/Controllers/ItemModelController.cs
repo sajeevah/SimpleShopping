@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Context.Models;
@@ -39,6 +41,7 @@ namespace SimpleShopping.Api.Controllers
 
         // POST api/ItemModel
         [HttpPost]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task PostItemModel([FromBody] ItemModel itemModel)
         {
 
@@ -48,6 +51,7 @@ namespace SimpleShopping.Api.Controllers
 
         // PUT api/ItemModel/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutItemModel(Guid id, [FromBody] ItemModel itemModel)
         {
             if (!ModelState.IsValid)
@@ -83,6 +87,7 @@ namespace SimpleShopping.Api.Controllers
 
         // DELETE api/ItemModel/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteItemModel(Guid id)
         {
             var itemModel = await _context.ItemModel.FindAsync(id);

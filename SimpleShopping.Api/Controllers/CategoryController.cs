@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Context.Models;
@@ -39,6 +41,7 @@ namespace SimpleShopping.Api.Controllers
 
         // POST api/Category
         [HttpPost]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task PostCategory([FromBody] Category category)
         {
 
@@ -48,6 +51,7 @@ namespace SimpleShopping.Api.Controllers
 
         // PUT api/Category/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutCategory(Guid id, [FromBody] Category category)
         {
             if (!ModelState.IsValid)
@@ -83,6 +87,7 @@ namespace SimpleShopping.Api.Controllers
 
         // DELETE api/Category/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
             var category = await _context.Category.FindAsync(id);

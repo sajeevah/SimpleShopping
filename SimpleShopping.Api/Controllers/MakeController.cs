@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Context.Models;
@@ -39,6 +41,7 @@ namespace SimpleShopping.Api.Controllers
 
         // POST api/Make
         [HttpPost]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task PostMake([FromBody] Make make)
         {
 
@@ -48,6 +51,7 @@ namespace SimpleShopping.Api.Controllers
 
         // PUT api/Make/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutMake(Guid id, [FromBody] Make make)
         {
             if (!ModelState.IsValid)
@@ -83,6 +87,7 @@ namespace SimpleShopping.Api.Controllers
 
         // DELETE api/Make/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteMake(Guid id)
         {
             var make = await _context.Make.FindAsync(id);

@@ -71,6 +71,7 @@ namespace SimpleShopping.Api.Controllers
 
         // POST api/Item
         [HttpPost]
+        [Authorize(Roles = "Seller", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task PostItem([FromBody] Item item)
         {
 
@@ -80,6 +81,7 @@ namespace SimpleShopping.Api.Controllers
 
         // PUT api/Item/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Seller", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutItem(Guid id, [FromBody] Item item)
         {
             if (!ModelState.IsValid)
@@ -115,6 +117,7 @@ namespace SimpleShopping.Api.Controllers
 
         // DELETE api/Item/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Seller", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
             var item = await _context.Item.FindAsync(id);
