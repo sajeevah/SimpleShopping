@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AuthService } from 'src/@core/auth/auth.service';
 import { CategoryDataService } from 'src/@core/data/category-data.service';
 import { ItemDataService } from 'src/@core/data/item-data.service';
@@ -24,6 +24,8 @@ export class AddItemComponent implements OnInit {
   public categories: ICategory[] = [];
   public itemModels: IItemModel[] = [];
   public makes: IMake[] = [];
+  public filename: string = '';
+  public formData = new FormData();
   
   constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +45,14 @@ export class AddItemComponent implements OnInit {
 
   public get addItemFormController() {
     return this.addItemForm.controls;
+  }
+
+  public setFile(files: FileList | null) {
+    if (files && files[0]) {
+      this.filename = files[0].name;
+      this.formData = new FormData();
+      this.formData.append(files[0].name, files[0]);
+    }
   }
 
   public ngOnInit(): void {
@@ -78,7 +88,7 @@ export class AddItemComponent implements OnInit {
       return;
     }
 
-    const data: IItem = {
+    let data: IItem = {
       name: this.addItemFormController.name.value,
       description: this.addItemFormController.description.value,
       categoryId: this.addItemFormController.category.value,
@@ -90,13 +100,17 @@ export class AddItemComponent implements OnInit {
       price: Number(this.addItemFormController.price.value),
     }
 
-    this.itemDataService.create(data).subscribe(
-      result => {
-        this.router.navigate(['/seller/my-items']);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    this.itemDataService.uploadImage(this.formData).pipe(
+      take(1),
+      switchMap(( imagePath ) => {
+        data.imageUrl = imagePath.path;
+        return this.itemDataService.create(data).pipe(
+          map( result => {
+            this.router.navigate(['/seller/my-items']);
+          })
+        )
+      })
+    ).subscribe();
+    
   }
 }

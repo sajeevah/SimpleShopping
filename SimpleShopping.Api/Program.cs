@@ -1,5 +1,8 @@
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SimpleShopping.Api.Interfaces;
+using SimpleShopping.Api.Services;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Identity.Extensions;
 using SimpleShopping.Identity.Interfaces;
@@ -13,6 +16,8 @@ var configuration = new ConfigurationBuilder()
 
 // Add services to the container.
 builder.Services.AddDbContext<SimpleShoppingContext>(x => x.UseSqlServer(configuration.GetConnectionString("SimpleShoppingConnectionString")));
+
+builder.Services.AddScoped(x => new BlobServiceClient(configuration.GetValue<string>("AzureBlobStorage")));
 
 builder.Services.AddAuthServices(configuration);
 
@@ -58,6 +63,8 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
+
+builder.Services.AddScoped<IBlobService, BlobService>();
 
 var app = builder.Build();
 

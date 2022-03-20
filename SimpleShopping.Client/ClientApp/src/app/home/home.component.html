@@ -19,7 +19,7 @@
       <td>{{ item.category?.name }}</td>
       <td>{{ item.make?.name }}</td>
       <td>{{ item.itemModel?.name }}</td>
-      <td><img src="https://www.learningcontainer.com/wp-content/uploads/2020/08/Sample-png-Image-for-Testing.png" width="50" height="50"></td>
+      <td><img src="{{ item.imageUrl }}" width="50" height="50"></td>
       <td>{{ item.price }}</td>
       <td *ngIf="isBuyer()">
         <button *ngIf="item.quantity && item.quantity > 0" class="btn btn-primary" (click)="addToCart(item.id)" >Add to cart</button>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AuthService } from 'src/@core/auth/auth.service';
 import { CategoryDataService } from 'src/@core/data/category-data.service';
 import { ItemDataService } from 'src/@core/data/item-data.service';
@@ -25,6 +26,9 @@ export class UpdateItemComponent implements OnInit {
   public makes: IMake[] = [];
   public itemId: string = '';
   public item: IItem = {};
+  public filename: string = '';
+  public formData = new FormData();
+  private isImageUpload = false;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +45,17 @@ export class UpdateItemComponent implements OnInit {
 
   public get updateItemFormController() {
     return this.updateItemForm.controls;
+  }
+
+  public setFile(files: FileList | null) {
+    if (files && files[0]) {
+      this.filename = files[0].name;
+      this.formData = new FormData();
+      this.formData.append(files[0].name, files[0]);
+      this.isImageUpload = true;
+    } else {
+      this.isImageUpload = false;
+    }
   }
 
   public ngOnInit(): void {
@@ -95,7 +110,7 @@ export class UpdateItemComponent implements OnInit {
       return;
     }
 
-    const data: IItem = {
+    let data: IItem = {
       id: this.item.id,
       name: this.updateItemFormController.name.value,
       description: this.updateItemFormController.description.value,
@@ -104,17 +119,29 @@ export class UpdateItemComponent implements OnInit {
       makeId: this.updateItemFormController.make.value,
       quantity: Number(this.updateItemFormController.quantity.value),
       price: Number(this.updateItemFormController.price.value),
-      imageUrl: '',
+      imageUrl: this.item.imageUrl,
       sellerId: this.authService.currentUserValue.id,
     }
 
-    this.itemDataService.update(this.item.id, data).subscribe(
-      result => {
+    if( this.isImageUpload ) {
+      this.itemDataService.uploadImage(this.formData).pipe(
+        take(1),
+        switchMap(( imagePath ) => {
+          data.imageUrl = imagePath.path;
+          return this.updateItem(data);
+        })
+      ).subscribe();
+    } else {
+      this.updateItem(data).subscribe();
+    }
+    
+  }
+
+  private updateItem(data: IItem) {
+    return this.itemDataService.update(this.item.id, data).pipe(
+      map( result => {
         this.router.navigate(['/seller/my-items']);
-      },
-      error => {
-        console.log(error);
-      }
+      })
     )
   }
 }

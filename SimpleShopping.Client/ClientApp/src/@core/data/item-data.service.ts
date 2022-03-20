@@ -41,4 +41,8 @@ export class ItemDataService extends AbstractHttpClient {
   public deleteItem(id?: string): Observable<IItem> {
     return this.delete<IItem>(`Item/${id}`, );
   };
+
+  public uploadImage(payload: FormData): Observable<{ path: string}> {
+    return this.postFile<{ path: string}>( `upload`, payload);
+  }
 }

@@ -36,6 +36,18 @@
         <option *ngFor="let mo of itemModels" [value]="mo.id">{{ mo.name }}</option>
       </select>
     </div>
+    <div class="form-floating">
+      <label for="model">Image</label>
+      <button type="button" (click)="fileInput.click()">Choose File</button>
+      <input
+        hidden
+        #fileInput
+        type="file"
+        id="file"
+        (change)="setFile(fileInput.files)"
+      />
+      <label>{{ filename }}</label>
+    </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Update</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
   </form>
