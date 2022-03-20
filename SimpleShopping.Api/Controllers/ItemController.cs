@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleShopping.Context.Context;
 using SimpleShopping.Context.Models;
@@ -37,6 +39,21 @@ namespace SimpleShopping.Api.Controllers
             }
 
             return Ok(item);
+        }
+
+        // GET api/Item/seller/5
+        [HttpGet("seller/{id}")]
+        [Authorize(Roles = "Seller", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetSellerItems(string id)
+        {
+            var items = await _context.Item.Where(x => x.SellerId == id)
+                .Include(c => c.Category)
+                .Include(m => m.ItemModel)
+                .Include(ma => ma.Make)
+                .Include(i => i.ItemImages)
+                .ToListAsync();
+
+            return Ok(items);
         }
 
         // POST api/Item

@@ -1,23 +1,24 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ItemDataService } from 'src/@core/data/item-data.service';
+import { AuthService } from 'src/@core/auth/auth.service';
+import { IItem } from 'src/@core/models/item.model';
 
 @Component({
   selector: 'app-my-items',
   templateUrl: './my-items.component.html'
 })
-export class MyItemsComponent {
-  public forecasts: WeatherForecast[] = [];
+export class MyItemsComponent implements OnInit {
+  public items: IItem[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+  constructor(
+    private itemDataService: ItemDataService,
+    private authService: AuthService,
+  ) {
+
   }
-}
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  
+  public ngOnInit(): void {
+    this.itemDataService.getByUserId(this.authService.currentUserValue.id)
+      .subscribe( data => { this.items = data } );
+  }
 }

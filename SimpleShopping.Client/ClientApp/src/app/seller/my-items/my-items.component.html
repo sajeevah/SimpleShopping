@@ -1,6 +1,6 @@
 <h1 id="tableLabel">My Items</h1>
-<button class="btn btn-primary" >Add</button>
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<a class="btn btn-primary" [routerLink]="['/seller/add-item']"  >Add</a>
+<table class='table table-striped' aria-labelledby="tableLabel">
   <thead>
     <tr>
       <th>Name</th>
@@ -13,13 +13,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-      <td>{{ forecast.summary }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let item of items">
+      <td>{{ item.name }}</td>
+      <td>{{ item.description }}</td>
+      <td>{{ item.category?.name }}</td>
+      <td>{{ item.make?.name }}</td>
+      <td>{{ item.itemModel?.name }}</td>
+      <td>{{ item.quantity }}</td>
       <td>
         <button class="btn btn-primary" >Update</button>
         <button class="btn btn-primary" >Delete</button>

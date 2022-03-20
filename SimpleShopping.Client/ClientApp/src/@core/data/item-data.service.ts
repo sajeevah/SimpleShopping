@@ -26,6 +26,10 @@ export class ItemDataService extends AbstractHttpClient {
     return this.get<IItem>( `Item/${id}`);
   }
 
+  public getByUserId(id?: string): Observable<IItem[]> {
+    return this.get<IItem[]>( `Item/seller/${id}`);
+  }
+
   public create(payload: IItem): Observable<IItem> {
     return this.post<IItem>( `Item`, payload);
   }
