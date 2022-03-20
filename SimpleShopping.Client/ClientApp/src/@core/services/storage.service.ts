@@ -28,7 +28,7 @@ export class StorageService {
     }
   };
 
-  public getCart(): any {
+  public getCart(): IItem[] {
     if(localStorage.getItem(this.cart)) {
         const items: IItem[] =  JSON.parse(localStorage.getItem(this.cart) || '');
         return items;
@@ -48,6 +48,10 @@ export class StorageService {
 
   public setCurrentUser(user: IUser) {
     localStorage.setItem(this.currentUser, JSON.stringify(user));
+  };
+
+  public setCart(items: IItem[]) {
+    localStorage.setItem(this.cart, JSON.stringify(items));
   };
 
   public setExpJwtToken(jwtExp: string) {

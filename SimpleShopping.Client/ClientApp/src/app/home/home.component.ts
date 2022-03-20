@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
+import { AuthService } from 'src/@core/auth/auth.service';
 import { ItemDataService } from 'src/@core/data/item-data.service';
 import { IItem } from 'src/@core/models/item.model';
+import { StorageService } from 'src/@core/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private itemDataService: ItemDataService,
+    private authService: AuthService,
+    private storageService: StorageService
   ) {
 
   }
@@ -27,7 +31,19 @@ export class HomeComponent implements OnInit {
   }
 
   public addToCart(id?: string): void {
-    
+    let cartItems = this.storageService.getCart();
+    let item = this.items.filter( x => x.id == id )[0];
+    item.id = `${item.id}-${cartItems.length+1}`;
+    cartItems.push(item);
+    this.storageService.setCart(cartItems);
+  }
+
+  public isSeller() {
+    return this.authService.isSeller;
+  }
+
+  public isBuyer() {
+    return this.authService.isBuyer;
   }
   
 }

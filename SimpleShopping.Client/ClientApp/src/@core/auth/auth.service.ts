@@ -33,15 +33,15 @@ export class AuthService {
   }
 
   get isAdmin() {
-    return this.currentUser && this.currentUserSubject.value.userRole === Role.Admin;
+    return this.currentUserSubject.value && this.currentUserSubject.value.userRole === Role.Admin;
   }
 
   get isBuyer() {
-    return this.currentUser && this.currentUserSubject.value.userRole === Role.Buyer;
+    return this.currentUserSubject.value && this.currentUserSubject.value.userRole === Role.Buyer;
   }
 
   get isSeller() {
-    return this.currentUser && this.currentUserSubject.value.userRole === Role.Seller;
+    return this.currentUserSubject.value && this.currentUserSubject.value.userRole === Role.Seller;
   }
 
   public login(userName: string, password: string) {

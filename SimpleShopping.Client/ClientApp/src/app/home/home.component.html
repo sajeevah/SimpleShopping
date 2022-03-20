@@ -7,10 +7,9 @@
       <th>Category</th>
       <th>Make</th>
       <th>Model</th>
-      <th>Quantity</th>
       <th>Image</th>
       <th>Price</th>
-      <th>Action</th>
+      <th *ngIf="isBuyer()">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -20,11 +19,11 @@
       <td>{{ item.category?.name }}</td>
       <td>{{ item.make?.name }}</td>
       <td>{{ item.itemModel?.name }}</td>
-      <td>{{ item.quantity }}</td>
       <td><img src="https://www.learningcontainer.com/wp-content/uploads/2020/08/Sample-png-Image-for-Testing.png" width="50" height="50"></td>
       <td>{{ item.price }}</td>
-      <td>
-        <button class="btn btn-primary" (click)="addToCart(item.id)" >Add to cart</button>
+      <td *ngIf="isBuyer()">
+        <button *ngIf="item.quantity && item.quantity > 0" class="btn btn-primary" (click)="addToCart(item.id)" >Add to cart</button>
+        <span *ngIf="item.quantity && item.quantity <= 0">out of stock</span>
       </td>
     </tr>
   </tbody>

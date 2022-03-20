@@ -1,1 +1,21 @@
 
+<h1 id="tableLabel">Cart</h1>
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{ item.name }}</td>
+      <td>{{ item.price }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="removeFromCart(item.id)" >Remove</button>
+      </td>
+    </tr>
+  </tbody>
+  <h3>Total - {{ total }}</h3>
+</table>
