@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AbstractHttpClient } from '../clients/abstract-http.client';
 import { HttpClient } from '@angular/common/http';
 import { ICategory } from '../models/category.model';
+import { StorageService } from '../services/storage.service';
 
 
 @Injectable({
@@ -10,8 +11,11 @@ import { ICategory } from '../models/category.model';
 })
 export class CategoryDataService extends AbstractHttpClient {
 
-  constructor(protected httpClient: HttpClient) { 
-    super(httpClient);
+  constructor(
+    protected httpClient: HttpClient,
+    protected storageService: StorageService
+  ) { 
+    super(httpClient, storageService);
   }
 
   public getAll(): Observable<ICategory[]> {

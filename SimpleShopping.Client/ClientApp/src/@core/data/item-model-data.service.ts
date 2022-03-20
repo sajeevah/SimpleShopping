@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AbstractHttpClient } from '../clients/abstract-http.client';
 import { HttpClient } from '@angular/common/http';
 import { IItemModel } from '../models/item-model.model';
+import { StorageService } from '../services/storage.service';
 
 
 @Injectable({
@@ -10,8 +11,11 @@ import { IItemModel } from '../models/item-model.model';
 })
 export class ItemModelDataService extends AbstractHttpClient {
 
-  constructor(protected httpClient: HttpClient) { 
-    super(httpClient);
+  constructor(
+    protected httpClient: HttpClient,
+    protected storageService: StorageService,
+  ) { 
+    super(httpClient, storageService);
   }
 
   public getAll(): Observable<IItemModel[]> {

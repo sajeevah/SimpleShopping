@@ -1,14 +1,17 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { StorageService } from '../services/storage.service';
 
 
 export abstract class AbstractHttpClient {
 
   private readonly baseApiUrl: string;  
 
-  constructor(protected httpClient: HttpClient) { 
+  constructor(
+    protected httpClient: HttpClient,
+    protected storageService: StorageService,
+  ) { 
     this.baseApiUrl = environment.baseApiUrl;
   }
 
@@ -59,14 +62,14 @@ export abstract class AbstractHttpClient {
   }
 
   private getHeaders(): HttpHeaders {
-    const headersConfig = {
+    const headersConfig: any = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
 
-    //const jwt = this.jwt.getAccessToken();
+    const jwt = this.storageService.getJwtToken();
     // tslint:disable-next-line: no-string-literal
-    // if (jwt != null) { headersConfig['Authorization'] = `Bearer ${jwt}`; }
+    if (jwt != null) { headersConfig['Authorization'] = `Bearer ${jwt}`; }
     return new HttpHeaders(headersConfig);
   }
 
