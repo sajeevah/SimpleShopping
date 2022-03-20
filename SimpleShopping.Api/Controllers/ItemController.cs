@@ -22,16 +22,29 @@ namespace SimpleShopping.Api.Controllers
 
         // GET: api/Item
         [HttpGet]
-        public IEnumerable<Item> GetCategores()
+        public async Task<IActionResult> GetCategores()
         {
-            return _context.Item;
+            var items = await _context.Item
+                .Include(c => c.Category)
+                .Include(m => m.ItemModel)
+                .Include(ma => ma.Make)
+                .Include(i => i.ItemImages)
+                .ToArrayAsync();
+
+
+            return Ok(items);
         }
 
         // GET api/Item/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem(Guid id)
         {
-            var item = await _context.Item.FindAsync(id);
+            var item = await _context.Item
+                .Include(c => c.Category)
+                .Include(m => m.ItemModel)
+                .Include(ma => ma.Make)
+                .Include(i => i.ItemImages)
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (item == null)
             {

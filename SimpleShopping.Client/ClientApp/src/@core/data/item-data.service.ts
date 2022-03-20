@@ -22,7 +22,7 @@ export class ItemDataService extends AbstractHttpClient {
     return this.get<IItem[]>( `Item`);
   }
 
-  public getById(id: number): Observable<IItem> {
+  public getById(id: string): Observable<IItem> {
     return this.get<IItem>( `Item/${id}`);
   }
 
@@ -34,8 +34,8 @@ export class ItemDataService extends AbstractHttpClient {
     return this.post<IItem>( `Item`, payload);
   }
 
-  public update(payload: IItem): Observable<IItem> {
-    return this.put<IItem>(`Item`, payload);
+  public update(id?: string, payload?: IItem): Observable<IItem> {
+    return this.put<IItem>(`Item/${id}`, payload);
   };
 
   public deleteItem(id: string): Observable<IItem> {

@@ -21,7 +21,7 @@
       <td>{{ item.itemModel?.name }}</td>
       <td>{{ item.quantity }}</td>
       <td>
-        <button class="btn btn-primary" >Update</button>
+        <button class="btn btn-primary" (click)="goToUpdate(item.id)" >Update</button>
         <button class="btn btn-primary" >Delete</button>
       </td>
     </tr>

@@ -1,0 +1,38 @@
+<main class="form-signin">
+  <form [formGroup]="updateItemForm" (ngSubmit)="onSubmit()">
+    <h1 class="h3 mb-3 fw-normal">Add Item</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
+      <label for="name">Name</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control"  formControlName="description" id="description" placeholder="description">
+      <label for="description">Description</label>
+    </div>
+    <div class="form-floating">
+      <input type="number" class="form-control" formControlName="quantity" id="quantity" placeholder="quantity">
+      <label for="quantity">Quantity</label>
+    </div>
+    <div class="form-floating">
+      <label for="make">Category</label>
+      <select class="form-control" formControlName="category" id="category" placeholder="category">
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+    </div>
+    <div class="form-floating">
+      <label for="make">Make</label>
+      <select class="form-control" formControlName="make" id="make" placeholder="make">
+        <option *ngFor="let m of makes" [value]="m.id">{{ m.name }}</option>
+      </select>
+    </div>
+    <div class="form-floating">
+      <label for="model">Model</label>
+      <select class="form-control" formControlName="model" id="model" placeholder="model">
+        <option *ngFor="let mo of itemModels" [value]="mo.id">{{ mo.name }}</option>
+      </select>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Update</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+  </form>
+</main>
