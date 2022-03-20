@@ -29,4 +29,8 @@ export class CategoryDataService extends AbstractHttpClient {
   public update(payload: ICategory): Observable<ICategory> {
     return this.put<ICategory>(`Category`, payload);
   };
+
+  public deleteCategory(id: string): Observable<ICategory> {
+    return this.delete<ICategory>(`Category/${id}`, );
+  };
 }
