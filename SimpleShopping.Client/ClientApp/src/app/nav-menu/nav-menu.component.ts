@@ -43,6 +43,14 @@ export class NavMenuComponent implements OnInit {
     ).subscribe()
   }
 
+  public isSeller() {
+    return this.authService.isSeller;
+  }
+
+  public isBuyer() {
+    return this.authService.isBuyer;
+  }
+
   public logout(): void {
     this.authService.logout();
     location.reload();

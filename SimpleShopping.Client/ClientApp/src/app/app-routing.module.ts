@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CounterComponent } from './counter/counter.component';
+import { AuthGuard } from 'src/@core/auth/auth.guards';
 import { HomeComponent } from './home/home.component';
 
 
@@ -12,10 +12,14 @@ const appRoutes: Routes = [
     },
     {
         path: 'seller',
-        loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule)
+        loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule),
+        canActivate: [AuthGuard],
     },
-    { path: 'counter', component: CounterComponent },
-    // { path: 'fetch-data', component: FetchDataComponent },
+    {
+        path: 'buyer',
+        loadChildren: () => import('./buyer/buyer.module').then(m => m.BuyerModule),
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({

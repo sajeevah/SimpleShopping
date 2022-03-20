@@ -27,12 +27,12 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
+          <li class="nav-item" *ngIf="isBuyer()" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/buyer/cart']"
+              >Cart</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="isSeller()" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/seller/my-items']"
               >My Items</a
             >

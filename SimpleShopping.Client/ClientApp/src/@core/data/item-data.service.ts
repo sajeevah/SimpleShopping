@@ -38,7 +38,7 @@ export class ItemDataService extends AbstractHttpClient {
     return this.put<IItem>(`Item/${id}`, payload);
   };
 
-  public deleteItem(id: string): Observable<IItem> {
+  public deleteItem(id?: string): Observable<IItem> {
     return this.delete<IItem>(`Item/${id}`, );
   };
 }
